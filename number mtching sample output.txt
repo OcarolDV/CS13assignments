@@ -1,0 +1,96 @@
+*********************************************************************************************
+* Welcome to number matching game. I will generte three random numbers for you. If two      *
+* of the numbers match you win 100, if you get three matching numbers you win 300 dollars   *
+*********************************************************************************************
+
+What is your name: Alex
+
+Hello Alex lets start playing
+
+
+You got: 8 5 7
+Sorry no match
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 9 3 8
+Sorry no match
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 6 9 9
+You got two matches, you won 100 dollars
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 3 9 1
+Sorry no match
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 9 9 8
+You got two matches, you won 100 dollars
+
+Hit enter to continue or press q/Q to quit  q
+
+Total amount you won: 200
+
+
+Hit enter to let another person play or enter Q to quit the program
+
+*********************************************************************************************
+* Welcome to number matching game. I will generte three random numbers for you. If two      *
+* of the numbers match you win 100, if you get three matching numbers you win 300 dollars   *
+*********************************************************************************************
+
+What is your name: Jose
+
+Hello Jose lets start playing
+
+
+You got: 6 4 4
+You got two matches, you won 100 dollars
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 9 8 1
+Sorry no match
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 2 9 4
+Sorry no match
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 1 9 4
+Sorry no match
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 5 9 3
+Sorry no match
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 7 5 9
+Sorry no match
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 5 7 6
+Sorry no match
+
+Hit enter to continue or press q/Q to quit  
+
+You got: 3 8 1
+Sorry no match
+
+Hit enter to continue or press q/Q to quit  q
+
+Total amount you won: 100
+
+
+Hit enter to let another person play or enter Q to quit the program:  q
+Good Bye! Come Back soon to play again
+
