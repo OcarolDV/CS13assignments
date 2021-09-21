@@ -1,14 +1,37 @@
 import java.util.*;
-public class Document
-{
- // your code, read the provided document before implementing
- 
- 
- 
+public class Document {
+    private String content;
+
+    public Document (String text){
+        content = text;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    //Im sure you can just do DocumentName.getContent().length() on the main main method
+    public int getContentLength(){
+        content.length();
+    }
+
+    //this is already a method
+    public boolean contains(){
+
+    }
+
 }
-class Email extends Document
-{                        
-     //your code, read the provided documnet before implementing
+class Email extends Document {
+    private String sender;
+    private String recipient;
+    private Date date;
+    private String subject;
+    private String cc;
+    private boolean isSent;
      
      
      
