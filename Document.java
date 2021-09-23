@@ -32,12 +32,105 @@ class Email extends Document {
     private String subject;
     private String cc;
     private boolean isSent;
-     
-     
-     
-     
-     
-} 
+
+    public Email(String sender, String recipient, Date date, String subject, String cc, boolean isSent){
+        super(content);
+        sender = sender;
+        recipient = recipient;
+        date = date;
+        subject = subject;
+        cc = cc;
+        isSent = isSent;
+    }
+
+    public void send(){
+        isSent = true;
+    }
+
+    public void forward(){
+
+    }
+
+    public boolean getSent(){
+        return isSent;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getRecipient(){
+        return recipient;
+    }
+
+    public String getcc() {
+        return cc;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setSender(String sender) {
+        if(isSent == false){
+            this.sender = sender;
+        } else {
+            System.out.println("Sorry, this email has already been sent and cannot be modified");
+        }
+    }
+
+    public void setRecipient(String recipient) {
+        if(isSent == false){
+            this.recipient = recipient;
+        } else {
+            System.out.println("Sorry, this email has already been sent and cannot be modified");
+        }
+    }
+
+    public void setSubject(String subject) {
+        if(isSent == false){
+            this.subject = subject;
+        } else {
+            System.out.println("Sorry, this email has already been sent and cannot be modified");
+        }
+    }
+
+    public void setcc(String cc) {
+        this.cc = cc;
+    }
+
+    public void toString(){
+        System.out.println();
+        System.out.println("********************************");
+        System.out.println();
+        System.out.println("Sender: " + sender);
+        System.out.println("Recipient: " + recipient);
+        System.out.println("CC: " + cc);
+        System.out.println("Subject: " + subject);
+        System.out.println("Date: " + date);
+        System.out.println("Content: " + content);
+        System.out.println();
+        System.out.println("********************************");
+        System.out.println();
+    }
+
+    public void modifyContent(String newText){
+        if(isSent == false){
+            super.setContent(newText);
+        } else {
+            System.out.println("Sorry, this email has already been sent and cannot be modified");
+        }
+    }
+
+    public Email forward(String rec, String sender, String cc){
+        Email f = new Email (this.getText(), sender, rec, this.subject, cc);
+        f.date = new Date();
+        f.isSent = true;
+        return f;
+
+    }
+
+}
 
 //****************************************************************************************
 
