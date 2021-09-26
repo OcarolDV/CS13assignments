@@ -6,7 +6,7 @@ public class Document {
         content = text;
     }
 
-    public String getContent() {
+    public String getText() {
         return content;
     }
 
@@ -14,41 +14,44 @@ public class Document {
         this.content = content;
     }
 
-    //Im sure you can just do DocumentName.getContent().length() on the main main method
-    public int getContentLength(){
-        content.length();
+    public String getContent(){
+        return content;
     }
 
-    //this is already a method
-    public boolean contains(){
+    //Im sure you can just do DocumentName.getContent().length() on the main main method
+    public int getDocumentLength(){
+        return content.length();
+    }
 
+    public boolean contains(String word){
+        return content.contains(word);
     }
 
 }
+
+
 class Email extends Document {
     private String sender;
     private String recipient;
-    private Date date;
+    private Calendar date;
     private String subject;
     private String cc;
     private boolean isSent;
 
-    public Email(String sender, String recipient, Date date, String subject, String cc, boolean isSent){
-        super(content);
-        sender = sender;
-        recipient = recipient;
-        date = date;
-        subject = subject;
-        cc = cc;
-        isSent = isSent;
+    //Calendar is used instead of date for a more efficient way of displaying and modifying Date and Time
+
+    public Email(String text, String send, String recip, String subj, String c){
+        super(text);
+        sender = send;
+        recipient = recip;
+        subject = subj;
+        cc = c;
+        isSent = false;
+        date = Calendar.getInstance();
     }
 
     public void send(){
         isSent = true;
-    }
-
-    public void forward(){
-
     }
 
     public boolean getSent(){
@@ -67,12 +70,11 @@ class Email extends Document {
         return cc;
     }
 
-    public Date getDate() {
-        return date;
-    }
+    //Since I am using Calendar instead of Date, there is no need to get a Date getter method
 
     public void setSender(String sender) {
         if(isSent == false){
+            System.out.println("Sender has been modified");
             this.sender = sender;
         } else {
             System.out.println("Sorry, this email has already been sent and cannot be modified");
@@ -81,6 +83,7 @@ class Email extends Document {
 
     public void setRecipient(String recipient) {
         if(isSent == false){
+            System.out.println("recipient has been modified");
             this.recipient = recipient;
         } else {
             System.out.println("Sorry, this email has already been sent and cannot be modified");
@@ -89,6 +92,7 @@ class Email extends Document {
 
     public void setSubject(String subject) {
         if(isSent == false){
+            System.out.println("Subject has been modified");
             this.subject = subject;
         } else {
             System.out.println("Sorry, this email has already been sent and cannot be modified");
@@ -96,26 +100,30 @@ class Email extends Document {
     }
 
     public void setcc(String cc) {
-        this.cc = cc;
+        if(isSent == false){
+            System.out.println("CC has been modified");
+            this.cc = cc;
+        } else {
+            System.out.println("Sorry, this email has already been sent and cannot be modified");
+        }
     }
 
-    public void toString(){
-        System.out.println();
-        System.out.println("********************************");
-        System.out.println();
-        System.out.println("Sender: " + sender);
-        System.out.println("Recipient: " + recipient);
-        System.out.println("CC: " + cc);
-        System.out.println("Subject: " + subject);
-        System.out.println("Date: " + date);
-        System.out.println("Content: " + content);
-        System.out.println();
-        System.out.println("********************************");
-        System.out.println();
+    public String toString(){
+        return("\n" + 
+               "********************************\n" + 
+               "\n" +
+               "Sender: " + sender + "\n" +
+               "Recipient: " + recipient + "\n" +
+               "CC: " + cc + "\n" +
+               "Subject: " + subject + "\n" +
+               "Date: " + date.getTime() + "\n" +
+               "\n" +
+               "********************************\n");
     }
 
     public void modifyContent(String newText){
         if(isSent == false){
+            System.out.println("Content has been modified");
             super.setContent(newText);
         } else {
             System.out.println("Sorry, this email has already been sent and cannot be modified");
@@ -124,32 +132,48 @@ class Email extends Document {
 
     public Email forward(String rec, String sender, String cc){
         Email f = new Email (this.getText(), sender, rec, this.subject, cc);
-        f.date = new Date();
+        f.date = Calendar.getInstance();
         f.isSent = true;
         return f;
 
     }
 
+    public void toCalandar(Calendar Cal, String content){
+        if(content.toLowerCase().contains("tomorrow")){
+            Cal.add(Calendar.DATE, 1);
+            System.out.println("The word tomorrow has been detected in the email, A calendar event has been added at " + Cal.getTime());
+        } else if(content.toLowerCase().contains("next week")){
+            Cal.add(Calendar.DATE, 7);
+            System.out.println("The words next week has been detected in the email, A calendar event has been added at " + Cal.getTime());
+        } else if(content.toLowerCase().contains("next month")){
+            Cal.add(Calendar.MONTH, 1);
+            System.out.println("The words next month has been detected in the email, A calendar event has been added at " + Cal.getTime());
+        }
+    }
 }
+
+
 
 //****************************************************************************************
 
 //uncommnet this driver class once you have implemented the Documnet class and the Email class  
      
-/*class EmailDriver
+class EmailDriver
 {
     // public Email(String text, String sender,String recipiant, String subject, String cc)
+
+    
     public static void main(String[] args)
     {
       //creating an Email object
        Email e1 = new Email("Hello everyone, we will have a meeting tomorrow at 10", "Gita Faroughi","Alex","Meeting","");
-      
+
+
        //sending the email
        e1.send();
        
        //disply the details about the email
        System.out.println(e1);
-       System.out.println("\n\n");
        
        //searching the email for the email for the word tomorrow
        boolean b = e1.contains("tmorrow");
@@ -182,6 +206,21 @@ class Email extends Document {
        
        //***********************************************************************
        //your turn, refer to the provided documnet on the codes you need to write
+       Email e2 = new Email("Hello, next week, we will have a meeting on monday at 10pm", "Kazyua",
+       "Ayume", "Meeting","Ryou");
+
+       System.out.println(e2);
+
+       e2.modifyContent("Hello, next week on Tuesday we will have a meeting at 10am");
+       e2.setcc("Ayase");
+
+       System.out.println(e2);
        
+       if(e2.contains("meeting")){
+        e2.toCalandar(Calendar.getInstance(), e2.getContent());
+       }
+        
+
+
     }
-}*/
+}
