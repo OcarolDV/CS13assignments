@@ -118,7 +118,7 @@ class Email extends Document {
                "Subject: " + subject + "\n" +
                "Date: " + date.getTime() + "\n" +
                "\n" +
-               "********************************\n");
+               "********************************");
     }
 
     public void modifyContent(String newText){
@@ -210,11 +210,15 @@ class EmailDriver
        "Ayume", "Meeting","Ryou");
 
        System.out.println(e2);
+       System.out.println("\nThe content of this email is: " + e1.getText());
+       System.out.println();
 
        e2.modifyContent("Hello, next week on Tuesday we will have a meeting at 10am");
        e2.setcc("Ayase");
 
        System.out.println(e2);
+       System.out.println("\nThe content of this email is: " + e1.getText());
+       System.out.println();
        
        if(e2.contains("meeting")){
         e2.toCalandar(Calendar.getInstance(), e2.getContent());
