@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.*;
 public class TrainProjectStudents
 {
@@ -53,7 +55,10 @@ class Person
    }
 
    public String toString(){
-      return ("First Name: " + name "\n" + "First Name: " + name "\n";
+      return ("First Name: " + name + "\n"
+              + "Last Name: " + lastName + "\n"
+              + "Contact: " + phoneNum + "\n"
+              + "Email: " + email + "\n");
    }
 
 }
@@ -85,6 +90,10 @@ class Passenger extends Person  {
    public int getSeatNumber(){
       return seatNumber;
    }
+
+   public String toString(){
+      return super.toString() + "Seat Number: " + seatNumber + "\nClass: " + classType + "\n"; //Calls toString from parent method, and adds on to it.
+   }
 }
 
 interface list{
@@ -95,72 +104,99 @@ interface list{
         
 }
 
-class Train implements list{ 
-   public static int count = 0;
+class Train implements list {
+   //myTrain and sierraTrain are different trains, so they need to have their own count variable
+   //if we were to count all the passengers in all the trains, we would use a static variable
+   public int count = 0;
    private Passenger[] train;
    private int trainNumber;
 
-   public Train(){
+   public Train() {
       train = new Passenger[10];
    }
 
-    
-   
-   public boolean add(Object O){
-      if(O instanceof Passenger){
+
+   public boolean add(Object O) {
+      if (O instanceof Passenger) {
          Passenger P = (Passenger) O;
          train[count] = P;
          count++;
          return true;
+
       }
       return false;
    }
 
-   public Object search(Object O){
-      
-      if(O instanceof Passenger){
-         Passenger P = (Passenger) O;
-         for(int i =  0; i < train.length; i++){
-            if (P.equals(train[i])){
-               return train[i];
+   public Object search(Object O) {
+
+      if (O instanceof String) {
+         for(Passenger P : train){
+            if (P != null) {
+               if (P.getLast().equalsIgnoreCase((String)O)){
+                  return P;
+               }
             }
          }
       }
       return null;
    }
 
-   public boolean delete(Object O){
-      
-      if(O instanceof Passenger){
-         Passenger P = (Passenger) O;
-         for(int i =  0; i < train.length; i++){
-            if (P.equals(train[i])){
-               train[i] = null;
-               for(int j = i; j < train.length - 1; j++){
-                  train[j] = train[j+1];
+
+   public boolean delete(Object O) {
+      boolean isTrue = false;
+      if (O instanceof String) {
+
+            for (int i = 0; i < train.length; i++) {
+               if (train[i] != null) {
+                  if (((String) O).equalsIgnoreCase(train[i].getLast())) {
+                     train[i] = null;
+                     //for everytime an instance is deleted, every instance is bumped down by one index
+                     for (int j = i; j < train.length - 1; j++) {
+                        train[j] = train[j + 1];
+                     }
+                     count--;
+                     isTrue = true;
+                  }
                }
-               count--;
-               return true;
             }
+
+      }
+      return isTrue;
+   }
+
+   public void printLast() {
+      for (Passenger P : train) {
+         if (P != null) {
+            System.out.println(P.getLast());
+         }
+
+      }
+   }
+
+   public int getCount() {
+      return count;
+   }
+
+   public String toString() {
+      String a = "";
+      for (Passenger P : train) {
+         if (P != null) {
+            a += P.toString() + "\n";
          }
       }
-      return false;
+      return (a);
    }
 
-   public void printLast(){
-      for(Passenger P : train){
-         System.out.println(P);
-      }
+   public Passenger[] getTrain() {
+      return train;
    }
-
-
 }
  /*once you implemet the above classes uncommnet the driver and test your program*/       
 class Driver
 {
    public static void main(String[] args)
    {
-      /*Scanner kb = new Scanner(System.in);
+      Scanner kb = new Scanner(System.in);
       Train myTrain = new Train();
       Passenger p1 = new Passenger("Alex", "Mano","123-456-7893","Mano@gmail.com", 12, "First class");
       Passenger p2 = new Passenger("Mary", "Trump","123-456-4894","mary@sierracollege.edu", 23, "Coach class");
@@ -172,7 +208,7 @@ class Driver
       myTrain.add(p3);
       myTrain.add(p4);
       myTrain.add(p5);
-      
+
        
       System.out.println("\nHere is the list of the passengers in this train");
       System.out.println(myTrain);
@@ -204,15 +240,62 @@ class Driver
       System.out.println("\nHere is the updated list");
       System.out.println(myTrain); 
       
-      System.out.println("This tarin has " + Train.getCount() + " passengers");
+      System.out.println("This train has " + myTrain.getCount() + " passengers");
       
-      */
+
       
       
       /********************************************************************************************/
       
-      /*   Add your code here for creating the sierraTrain, refer to the document for details    */
-      
+      Train sierraTrain = new Train();
+
+      Passenger dad = new Passenger("Santino", "Ocarol","123-456-7893", "santidar@gmail.com", 12, "First class");
+      Passenger mom = new Passenger("Gitta", "Ocarol","113-456-7193","gi@gmail.com", 13, "First class");
+      Passenger brother = new Passenger("Tatsuya", "Shiba","113-416-7893","Oniichan@gmail.com", 14, "First class");
+      Passenger sister = new Passenger("Izumi", "Sagiri","123-416-7893","Imouto@gmail.com", 15, "First class");
+      Passenger uncle = new Passenger("Alistaire", "Ocarol","113-456-7193","stairecase@gmail.com", 16, "First class");
+
+      sierraTrain.add(dad);
+      sierraTrain.add(mom);
+      sierraTrain.add(brother);
+      sierraTrain.add(sister);
+      sierraTrain.add(uncle);
+
+      System.out.println(sierraTrain);
+
+      System.out.println("Last name of all Passengers: ");
+      sierraTrain.printLast();
+
+      String scanned = "";
+
+      System.out.println("Search for a last name to search = ");
+      scanned = kb.next();
+
+      sierraTrain.search(scanned);
+      Passenger a = (Passenger)sierraTrain.search(scanned);
+
+      if(a == null)
+         System.out.println("Passenger not found");
+      else
+         System.out.println("Here is the info for the passenger: "+a);
+
+      System.out.println("\nTesting the delete method");
+      System.out.print("Enter the last name of the passenger: ");
+
+      scanned = kb.next();
+
+      boolean delet = sierraTrain.delete(scanned);
+      if(delet)
+         System.out.println("Passenger/s " + scanned+ " has been removed from the list");
+      else
+         System.out.println("Passenger not found");
+
+      System.out.println("\nHere is the updated list");
+      System.out.println(sierraTrain);
+
+      System.out.println("This train has " + sierraTrain.getCount() + " passengers");
+
+
       /******************************************************************************************/    
    
    }
